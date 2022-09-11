@@ -3,21 +3,30 @@ figma.showUI(__html__);
 
 figma.ui.resize(480, 720)
 figma.ui.onmessage = pluginMessage => {
-    const templateFrames = figma.root.findOne(n => n.type == "PAGE") as PageNode;
-    console.log(figma)
-    console.log(templateFrames.children.forEach(template => {console.log(template)} ))
-    console.log(templateFrames.name)
+    const templates = figma.root.findOne(n => n.type == "PAGE" && n.name == "templates") as PageNode;
+    
+    figma.getLocalPaintStyles()[0].paints=[
+      {
+        type: "SOLID",
+        visible: true,
+        opacity: 1,
+        blendMode: "NORMAL",
+        color: {
+          r: pluginMessage.background.r/255, g: pluginMessage.background.g/255, b: pluginMessage.background.b/255
+        }
+      }
+    ];
 
-    const nodes: SceneNode[] = [];
-    for (let i = 0; i < pluginMessage.id; i++) {
-      const rect = figma.createEllipse();
-      rect.x = i * 150;
-      //rect.fills = [{type: 'SOLID', color: {r: pluginMessage.background.r, g: pluginMessage.background.g, b: pluginMessage.background.b}}];
-      figma.currentPage.appendChild(rect);
-      nodes.push(rect);
-    }
-    figma.currentPage.selection = nodes;
-    figma.viewport.scrollAndZoomIntoView(nodes);
+    templates.children.forEach(template =>{
+      if(template.name == pluginMessage.templateName){
+        const newTemplate = template
+        newTemplate.x = 0
+        newTemplate.y = 0
+        
+        newTemplate.clone()
+        figma.closePlugin("Votre maquette a été générée !");
+      } else{
 
-  figma.closePlugin();
+      }
+    })
 };
