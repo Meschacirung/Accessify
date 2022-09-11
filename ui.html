@@ -1,0 +1,512 @@
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style type="text/tailwindcss">
+  :root{
+    --time : ''
+  }
+  body{
+    --time : ''
+    font-family: 'DM Sans', sans-serif;
+  }
+  .template{
+    animation-name:appear;
+  }
+
+  @keyframes appear {
+      from{
+        opacity:0;
+        transform: scale(.9);
+      }
+      to{
+        opacity: 1;
+        transform:scale(1);
+      }
+  }
+</style>
+
+
+<div class="pt-0 p-6 relative h-full pb-6 overflow-x-hidden bg-white dark:bg-neutral-800">
+  <div class="h-full flex flex-col justify-between">
+    <div>
+      <div class="relative -mx-6 p-6 group">
+        <div class="flex items-center -ml-6 -mt-6 -mb-3">
+          <button id="return" class="invisible opacity-0  duration-500 relative peer w-max group flex justify-center h-12 w-6 items-center before:absolute before:inset-0 before:rounded-r-full hover:before:bg-gray-100 dark:hover:before:bg-neutral-600 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:bg-neutral-300 disabled:before:scale-100">
+            <span class="w-max relative flex items-center tracking-wide font-medium text-blue-900 dark:text-blue-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="rotate-180 h-4 w-4 transition duration-300 group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </button>
+          <span class="inline-block text-sm text-neutral-500 duration-300 peer-hover:opacity-0 dark:text-neutral-400">Etape <span id="step"></span></span>
+        </div>
+        <span class="text-base font-medium text-neutral-900 dark:text-white" id="step-name"></span>
+        <div class="h-4">
+          <div class="mt-2 w-full bg-blue-200 rounded-full dark:bg-neutral-700">
+            <div id="progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="w-4 h-1 overflow-hidden rounded-full bg-blue-500 duration-700 group-hover:h-4 dark:bg-blue-300">
+              <span id="percentage" class="px-2 text-white text-xs opacity-0 duration-300 group-hover:opacity-100 dark:text-blue-900"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="relative mt-2">
+        <div id="domain" class="duration-500">
+          <div class="relative text-neutral-600 dark:text-neutral-300">
+            <select name="platform" id="platform" class="appearance-none w-full px-6 py-4 border ring-2 ring-transparent border-neutral-300 outline-none rounded-2xl peer focus:ring-indigo-500 focus:border-transparent invalid:border-red-400 transition duration-200 dark:bg-neutral-800 dark:border-neutral-500 dark:placeholder-white">
+              <option value="empty">Votre platform</option>
+              <option value="0">Mobile</option>
+              <option value="1">Web</option>
+              <option value="2">Desktop</option>
+            </select>
+            <svg class="absolute right-3.5 top-4 w-6 h-6 material-icons text-neutral-500 peer-focus:text-neutral-600 rotate dark:text-neutral-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
+            </svg>
+            <label for="platform" class="absolute top-2 left-2.5 px-2 pt-0.5 bg-white cursor-text tracking-wide text-sm font-medium text-neutral-500 -translate-y-5 -translate-x-1 scale-90  peer-focus:text-indigo-400 transition duration-100 ease-in-out dark:bg-neutral-800 dark:text-white">Quelle app voulez-vous créer ?</label>
+          </div>
+          <div class="mt-6">
+            <div role="tablist" class="hidden w-max mx-auto relative flex gap-x-8 text-center">
+              <div class="indicator absolute w-12 h-12 rounded-full border border-blue-200 shadow-lg duration-500"></div>
+              <button id="mobile" role="tab" data-active="true" class="tab h-12 group text-blue-500">
+                <div class="mx-auto w-12 h-12 flex rounded-full transition group-hover:bg-neutral-100 group-hover:text-[#5D7489]">
+                  <svg class="m-auto px-3 h-6" viewBox="0 0 12 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 1H2.6C1.71634 1 1 1.71634 1 2.6V15.4C1 16.2837 1.71634 17 2.6 17H9C9.88366 17 10.6 16.2837 10.6 15.4V2.6C10.6 1.71634 9.88366 1 9 1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M5.76001 13.8H5.84001" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="tab-name visible opacity-100 mt-2 mx-auto w-max block font-medium text-neutral-700 transition duration-300">Mobile</span>
+              </button>
+              <button id="web" role="tab" data-active="false" class="tab h-12 rounded-xl group text-[#899DB0]">
+                <div class="mx-auto w-12 h-12 flex rounded-full transition group-hover:bg-neutral-100 group-hover:text-[#5D7489]">
+                  <svg class="m-auto h-4" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 14.7143V3.28571C1 2.67951 1.24082 2.09812 1.66947 1.66947C2.09812 1.24082 2.67951 1 3.28571 1H19.2857C19.8919 1 20.4733 1.24082 20.902 1.66947C21.3306 2.09812 21.5714 2.67951 21.5714 3.28571V14.7143C21.5714 15.3205 21.3306 15.9019 20.902 16.3305C20.4733 16.7592 19.8919 17 19.2857 17H3.28571C2.67951 17 2.09812 16.7592 1.66947 16.3305C1.24082 15.9019 1 15.3205 1 14.7143Z" stroke="currentColor" stroke-width="2"/>
+                    <path d="M4.42857 4.42857H5.57143" stroke="#899DB0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="tab-name invisible opacity-0 mt-2 mx-auto w-max block font-medium text-neutral-700 transition duration-300">Web</span>
+              </button>
+              <button id="desktop" role="tab" data-active="false" class="tab rounded-xl text-[#899DB0] group">
+                <div class="mx-auto w-12 h-12 flex rounded-full transition group-hover:bg-neutral-100 group-hover:text-[#5D7489]">
+                  <svg class="m-auto h-4" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7.57143 17H15.5714M1.57143 3C1.57143 2.46957 1.78214 1.96086 2.15721 1.58579C2.53229 1.21071 3.04099 1 3.57143 1H19.5714C20.1019 1 20.6106 1.21071 20.9856 1.58579C21.3607 1.96086 21.5714 2.46957 21.5714 3V12C21.5714 12.5304 21.3607 13.0391 20.9856 13.4142C20.6106 13.7893 20.1019 14 19.5714 14H3.57143C3.04099 14 2.53229 13.7893 2.15721 13.4142C1.78214 13.0391 1.57143 12.5304 1.57143 12V3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <span class="tab-name invisible opacity-0 mt-2 mx-auto w-max block font-medium text-neutral-700 transition duration-300">Desktop</span>
+              </button>
+            </div>
+            <div id="empty-state" class="mt-12">
+              <svg class="w-28 mx-auto text-blue-900/50 dark:text-gray-500" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_41_1561)">
+                <path d="M64 3C76.0647 3 87.8584 6.57759 97.8898 13.2804C107.921 19.9831 115.74 29.51 120.357 40.6563C124.974 51.8026 126.182 64.0677 123.828 75.9005C121.474 87.7334 115.665 98.6025 107.134 107.134C98.6025 115.665 87.7334 121.474 75.9005 123.828C64.0677 126.182 51.8026 124.974 40.6563 120.357C29.51 115.74 19.9831 107.921 13.2804 97.8898C6.57762 87.8584 3.00003 76.0647 3.00003 64C3.01591 47.8267 9.44778 32.3203 20.8841 20.884C32.3203 9.44775 47.8267 3.01588 64 3M64 0C51.342 0 38.9683 3.75353 28.4435 10.7859C17.9188 17.8184 9.71575 27.8138 4.87174 39.5083C0.02773 51.2027 -1.23968 64.071 1.22977 76.4858C3.69922 88.9006 9.79463 100.304 18.7452 109.255C27.6958 118.205 39.0995 124.301 51.5143 126.77C63.929 129.24 76.7973 127.972 88.4918 123.128C100.186 118.284 110.182 110.081 117.214 99.5565C124.246 89.0317 128 76.658 128 64C128 47.0261 121.257 30.7475 109.255 18.7452C97.2525 6.74284 80.9739 0 64 0V0Z" fill="currentColor"/>
+                <path d="M86.26 94.81C85.9566 94.8131 85.6597 94.7223 85.41 94.55C78.3657 89.6631 69.8759 87.3018 61.32 87.85C54.5915 88.3543 48.124 90.6656 42.6 94.54C42.4384 94.6529 42.2563 94.733 42.0638 94.7755C41.8714 94.818 41.6724 94.8222 41.4783 94.7879C41.2843 94.7535 41.0989 94.6813 40.9327 94.5752C40.7666 94.4692 40.6229 94.3315 40.51 94.17C40.397 94.0085 40.317 93.8263 40.2745 93.6338C40.232 93.4414 40.2278 93.2425 40.2621 93.0484C40.2965 92.8543 40.3687 92.6689 40.4747 92.5027C40.5807 92.3366 40.7184 92.1929 40.88 92.08C46.8506 87.8964 53.8397 85.402 61.11 84.86C70.343 84.2641 79.5062 86.8086 87.11 92.08C87.3711 92.2623 87.5675 92.5229 87.6706 92.8242C87.7738 93.1256 87.7783 93.4519 87.6836 93.7559C87.589 94.06 87.4 94.3261 87.144 94.5156C86.8881 94.7051 86.5784 94.8082 86.26 94.81V94.81Z" fill="currentColor"/>
+                <path d="M43.83 60.63C42.1249 60.6317 40.4519 60.1667 38.9923 59.2853C37.5327 58.4039 36.3423 57.1398 35.55 55.63C35.4409 55.4557 35.3688 55.2608 35.3382 55.0574C35.3076 54.8541 35.3192 54.6466 35.3722 54.4479C35.4251 54.2492 35.5184 54.0635 35.6462 53.9023C35.7739 53.7412 35.9335 53.6081 36.1149 53.5112C36.2963 53.4143 36.4956 53.3557 36.7006 53.3392C36.9056 53.3226 37.1118 53.3483 37.3064 53.4148C37.501 53.4813 37.6799 53.5871 37.8319 53.7256C37.9839 53.8641 38.1058 54.0324 38.19 54.22C38.7355 55.2403 39.5479 56.0933 40.5403 56.688C41.5327 57.2828 42.668 57.5969 43.825 57.5969C44.982 57.5969 46.1172 57.2828 47.1097 56.688C48.1021 56.0933 48.9144 55.2403 49.46 54.22C49.5526 54.046 49.6785 53.8919 49.8306 53.7666C49.9828 53.6413 50.1581 53.5471 50.3466 53.4896C50.5351 53.432 50.7331 53.4121 50.9293 53.4311C51.1254 53.45 51.316 53.5074 51.49 53.6C51.664 53.6926 51.818 53.8185 51.9434 53.9706C52.0687 54.1228 52.1628 54.2981 52.2204 54.4866C52.278 54.6751 52.2979 54.8731 52.2789 55.0693C52.26 55.2655 52.2026 55.456 52.11 55.63C51.3151 57.1377 50.124 58.4 48.665 59.281C47.206 60.162 45.5344 60.6284 43.83 60.63V60.63Z" fill="currentColor"/>
+                <path d="M85.57 60.63C83.8649 60.6317 82.1919 60.1667 80.7323 59.2853C79.2727 58.4039 78.0823 57.1398 77.29 55.63C77.1809 55.4557 77.1088 55.2608 77.0782 55.0574C77.0476 54.8541 77.0592 54.6466 77.1122 54.4479C77.1651 54.2492 77.2584 54.0635 77.3862 53.9023C77.5139 53.7412 77.6735 53.6081 77.8549 53.5112C78.0363 53.4143 78.2356 53.3557 78.4406 53.3392C78.6456 53.3226 78.8518 53.3483 79.0464 53.4148C79.241 53.4813 79.4199 53.5871 79.5719 53.7256C79.7239 53.8641 79.8458 54.0324 79.93 54.22C80.4755 55.2403 81.2879 56.0933 82.2803 56.688C83.2727 57.2828 84.408 57.5969 85.565 57.5969C86.722 57.5969 87.8572 57.2828 88.8497 56.688C89.8421 56.0933 90.6544 55.2403 91.2 54.22C91.2842 54.0324 91.4061 53.8641 91.5581 53.7256C91.7101 53.5871 91.8889 53.4813 92.0836 53.4148C92.2782 53.3483 92.4844 53.3226 92.6893 53.3392C92.8943 53.3557 93.0937 53.4143 93.2751 53.5112C93.4565 53.6081 93.616 53.7412 93.7438 53.9023C93.8715 54.0635 93.9648 54.2492 94.0178 54.4479C94.0708 54.6466 94.0823 54.8541 94.0517 55.0574C94.0211 55.2608 93.9491 55.4557 93.84 55.63C93.0485 57.1383 91.8596 58.4014 90.4019 59.2827C88.9442 60.164 87.2733 60.6299 85.57 60.63V60.63Z" fill="currentColor"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_41_1561">
+                <rect width="128" height="128" fill="white"/>
+                </clipPath>
+                </defs>
+              </svg>
+                
+              <div class="mt-4 text-center">
+                <h3 class="font-medium text-lg dark:text-white">Aucune maquette trouvée !</h3>
+                <p class="text-neutral-500">Commencez par choisir une plateforme</p>
+              </div>
+            </div>
+            <div class="mt-6">
+              <div id="mockups" class="grid grid-cols-2 gap-y-6 gap-x-3">
+              </div>
+            </div>
+          </div>
+        </div> 
+        <div id="brand" class="absolute top-0 opacity-0 -inset-x-6 translate-x-[100%]">
+          <div class="px-6 -mt-2">
+            <div class="flex gap-3">
+              <div class="relative w-full">
+                <label title="Click to upload" for="logo" 
+                    class="cursor-pointer flex items-center gap-4 px-6 py-4 before:border-neutral-300 hover:before:border-neutral-300 group dark:before:bg-neutral-900/70 dark:hover:before:border-neutral-600 before:bg-neutral-100 dark:before:border-neutral-700 before:absolute before:inset-0 before:rounded-2xl before:border before:border-dashed before:transition-transform before:duration-300 active:duration-75 active:before:scale-95">
+                  <div class="w-max relative">
+                      <img class="w-14" src="https://cdn-icons-png.flaticon.com/512/4208/4208436.png" alt="">
+                  </div>
+                  <span class="text-base font-medium relative text-cyan-900 dark:text-neutral-200 group-hover:text-blue-500 dark:group-hover:text-blue-300">
+                    Ajoutez votre logo <br>
+                    <span class="text-xs opacity-70">.png ou svg de préférence</span>
+                  </span>
+                </label>
+                <input hidden type="file" name="logo" id="logo">
+              </div>
+
+              <div class="w-56 flex border rounded-2xl dark:border-neutral-700">
+                <img id="logo-placeholder" class="h-6 w-max m-auto" src="https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE1Mu3b?ver=5c31" alt="">
+              </div>
+            </div>
+            <div class="mb-6 p-8 rounded-2xl bg-white mt-6 border border-neutral-200 bg-neutral-100 dark:shadow-xl dark:shadow-neutral-500/10 dark:bg-neutral-900 dark:border-neutral-700">
+              <h3 class="text-center text-lg font-medium text-neutral-800 dark:text-white">Couleur primaire</h3>
+              <div class="mt-8 flex gap-6 justify-center items-center">
+                <div class="relative">
+                  <input accept="hexvalue" value="#a705bd" hidden class="absolute invisible rounded-full appearance-none" type="color" name="theme" id="theme">
+                  <label for="theme" class="block w-16 h-16 rounded-full bg-[#a705bd]" id="colorPreview"></label>
+                </div>
+                <input id="colorInput" type="text" class="w-28 px-5 py-2.5 rounded-full border dark:border-neutral-700 dark:bg-transparent dark:text-white" value="#a705bd">
+              </div>
+              <div class="my-6 w-full flex flex-wrap justify-center gap-3">
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-yellow-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-orange-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-red-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-rose-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-pink-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-purple-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-indigo-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-blue-600">
+
+                  </div>
+                  <div class="w-6 h-6 rounded-full duration-300 hover:scale-110 bg-sky-600">
+
+                  </div>
+              </div>
+              <div class="-mb-6 -mx-6 py-6 mt-8 border rounded-lg bg-white dark:border-neutral-700 dark:bg-neutral-800">
+                <h6 class="w-max mx-auto mb-6 text-xs text-center tracking-wider text-neutral-700 dark:text-white">ACCESSIBILITE</h6>
+                <div id="access-monitor" class="w-full flex items-center justify-center gap-3 rounded-xl text-center">
+                  <span class="text-sm tracking-wide">Contraste <a href="https://www.w3.org/WAI/WCAG21/Understanding/conformance#levels" target="_blank" class="ml-2 px-2 p-1 border text-neutral-700 hover:text-blue-600 hover:border-blue-300 dark:hover:text-blue-300 dark:text-white dark:border-neutral-500">Niveau-AA</a></span>
+                  <svg id="good" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                  </svg>                  
+                  <svg id="caution" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                  </svg>                                  
+                </div>
+                <p class="mt-3 text-sm text-center text-neutral-600 dark:text-neutral-300">Les utilisateurs auront du mal à lire votre contenu <br> si la couleur a un contraste faible !</p>
+              </div>
+            </div>
+            <button id="generate" class="w-max ml-auto group relative flex h-11 items-center px-6 before:absolute before:inset-0 before:rounded-full before:bg-blue-600 dark:before:bg-blue-300 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95 disabled:before:bg-neutral-300 disabled:before:scale-100">
+              <span class="w-max mx-auto relative flex items-center gap-3 text-base font-medium text-white dark:text-neutral-900">
+                Générer maintenant
+                <svg xmlns="http://www.w3.org/2000/svg" class="-mr-1.5 h-5 w-5 transition duration-300 group-hover:translate-x-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  const platforms = [
+      mobile = [
+        {
+          id:1,
+          cover : "https://raw.githubusercontent.com/Meschacirung/irung/ae67df691f587f7ac7c6cba0dc4787b69cfc4fe4/images/fiskeleton.svg",
+          name : "Finance",
+        },
+        {
+          id:2,
+          cover : "https://raw.githubusercontent.com/Meschacirung/irung/c38d669233c6a48e6ad4aec47e9a1664a4256f41/images/muskeleton.svg",
+          name : "Music",
+        },
+        {
+          id:3,
+          cover : "https://raw.githubusercontent.com/Meschacirung/irung/a836ac08fb5eb3a6192e0c3b3480246e7645f28a/images/delivery.svg",
+          name : "Livraison",
+        },
+        {
+          id:4,
+          cover : "https://raw.githubusercontent.com/Meschacirung/irung/cc098a9b289a5738263246967b9781af9828333d/images/ecommerce.svg",
+          name : "eCommerce",
+        }
+      ],
+      web = [
+        {
+          id:5,
+          cover : "https://static.collectui.com/shots/3638606/why-you-shouldnt-rush-branding-large",
+          name : "Blog",
+        },
+        {
+          id:6,
+          cover : "https://mir-s3-cdn-cf.behance.net/project_modules/1400/da837994995083.5e8cb5f42cc72.jpg",
+          name : "Landing page",
+        },
+        {
+          id:7,
+          cover : "https://proxima.world/files/projects/7-1-min-5f52e678e05b2cc1ec56434094195e21-ae95603174528ec68e6ecbb2c6df86eb.png",
+          name : "Fintech",
+        },
+        {
+          id:8,
+          cover : "https://ui4free.com/storage/public/images/figma-crypto-exchange-blockchain-admin-dashboard-ui-ux_1643016364.jpg",
+          name : "Dashboard",
+        }
+      ],
+      desktop = [
+        {
+          id:9,
+          cover : "https://www.theme-junkie.com/wp-content/uploads/Geex-Figma-Admin-Dashboard-UI-Kit.jpg",
+          name : "Fig theme",
+        }
+      ]
+  ]
+  let mockupsContainer = document.querySelector('#mockups')
+  let mockupId = 0
+
+  let domainpage = document.querySelector('#domain')
+  let brandpage = document.querySelector('#brand')
+  let returnBtn = document.querySelector('#return')
+
+  let progressBar = document.querySelector('#progress')
+  let progressPercentage = progressBar.querySelector('#percentage')
+  let step = document.querySelector('#step')
+  let stepName = document.querySelector('#step-name')
+  let id = 0
+  let progress = [
+    {
+      step : 1,
+      name : "Choisir une plateforme",
+      bar : "4%"
+    },
+    {
+      step : 2,
+      name : "Choisir le domaine d'application",
+      bar : "33.3%"
+    },
+    {
+      step : 3,
+      name : "Branding",
+      bar : "66.6%"
+    },
+    {
+      step : 4,
+      name : "Entrain de générer",
+      bar : "100%"
+    }
+  ]
+  let currentstep = 0
+
+  function firststep (){
+    progressBar.style.width = progress[currentstep].bar
+    progressPercentage.innerHTML = progress[currentstep].bar
+    stepName.innerHTML = progress[currentstep].name
+    step.innerHTML = progress[currentstep].step
+  }
+
+  function nextstep (){
+    currentstep ++
+    progressBar.style.width = progress[currentstep].bar
+    progressPercentage.innerHTML = progress[currentstep].bar
+    stepName.innerHTML = progress[currentstep].name
+    step.innerHTML = progress[currentstep].step
+  }
+
+  function prevstep (){
+    currentstep --
+    progressBar.style.width = progress[currentstep].bar
+    progressPercentage.innerHTML = progress[currentstep].bar
+    stepName.innerHTML = progress[currentstep].name
+    step.innerHTML = progress[currentstep].step
+  }
+
+  function setTemplates(platform){
+    
+      let delay = 200
+      for(let i = 0; i < platform.length; i++){
+          delay += 400
+          let tId = platform[i].id
+          let tCover = platform[i].cover
+          let tName =  platform[i].name
+
+          let template = `<div id="${tId}" class="template cursor-pointer group h-[160px] border border-neutral-200 rounded-xl relative overflow-hidden hover:border-indigo-300 hover:shadow-2xl hover:shadow-indigo-100 dark:bg-neutral-800 dark:border-neutral-700 dark:hover:shadow-none">
+            <img class="w-full h-full object-cover transition duration-300 origin-top group-hover:scale-105" src="${tCover}" alt="">
+            <div class="absolute bottom-0 flex justify-center inset-x-0 pt-3 pb-2 px-4 bg-gradient-to-t from-white via-white transition-transform duration-300 group-hover:translate-y-12">
+              <span class="group-hover:text-blue-500 dark:text-neutral-900">${tName}</span>
+            </div>
+          </div>`
+
+          mockupsContainer.innerHTML += template
+          let newmockups = mockupsContainer.querySelectorAll('.template')
+          newmockups[i].style.setProperty('animation-duration', delay + 'ms')
+
+          if(platform.length < 2){
+            mockupsContainer.classList.remove('grid-cols-2')
+            newmockups[0].classList.add('h-[200px]')
+          }else {
+            mockupsContainer.classList.add('grid-cols-2')
+          }
+
+          let mockups = document.querySelectorAll('.template')
+          newmockups.forEach(newmockup =>{
+            newmockup.addEventListener('click', ()=>{
+              currentstep = 1
+              nextstep()
+              id = parseInt(newmockup.getAttribute('id'))
+              domainpage.classList.add('opacity-0', 'scale-90')
+              domainpage.classList.remove('delay-300')
+              brandpage.classList.remove('translate-x-[100%]', 'opacity-0')
+              brandpage.classList.add('duration-700')
+              returnBtn.classList.remove('invisible', 'opacity-0')
+            })
+          })
+      }
+  }
+
+  function unsetTemplates(){
+    mockupsContainer.innerHTML = ''
+  }
+</script>
+<script>
+let platform = document.querySelector('#platform')
+let emptyState = document.querySelector('#empty-state')
+let generateBtn = document.querySelector('#generate')
+let logo = document.querySelector('#logo')
+let logoPath = null
+let color = document.querySelector('#theme')
+let colorValue = color.value
+firststep()
+
+platform.addEventListener('change', ()=>{
+  for(let i = 0; i < platforms.length; i++){
+    unsetTemplates()
+  }
+  if(platform.value >= 0){
+      setTemplates(platforms[platform.value])
+      emptyState.classList.add('hidden')
+      if(!mockupsContainer.childElementCount > 0){
+        emptyState.classList.remove('hidden')
+        firststep();
+      } else{
+        nextstep() 
+        currentstep = 0
+      }
+    } else {
+      emptyState.classList.remove('hidden')
+      currentstep = 1
+      prevstep()
+    }
+})
+
+returnBtn.addEventListener('click', ()=>{
+  brandpage.classList.add('translate-x-[100%]', 'opacity-0')
+  domainpage.classList.remove('opacity-0', 'scale-90')
+  domainpage.classList.add('delay-300')
+  returnBtn.classList.add('invisible', 'opacity-0')
+
+  prevstep()
+})
+
+logo.addEventListener('change', ()=>{
+  logoPath = logo.files[0].path
+})
+
+/*
+document.getElementById('cancel').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+} */
+
+</script>
+
+<script>
+  function hexToRgb(hex) {
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+      return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+  }
+
+  function luminance(r, g, b) {
+    var a = [r, g, b].map(function (v) {
+        v /= 255;
+        return v <= 0.03928
+            ? v / 12.92
+            : Math.pow( (v + 0.055) / 1.055, 2.4 );
+    });
+    return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+  }
+
+  document.querySelector("#colorInput").addEventListener('input', ()=>{
+    document.querySelector("#colorPreview").style.background = document.querySelector("#colorInput").value
+    color = document.querySelector("#colorInput").value
+  })
+
+  function watchColorPicker(event) {
+      document.querySelector("#colorPreview").style.background = color.value
+      document.querySelector("#colorInput").value = color.value
+  }
+  color.addEventListener('input', ()=>{
+    watchColorPicker()
+    colorValue = color.value
+  })
+
+  const background = hexToRgb(colorValue)
+  const foreground = hexToRgb("#ffffff")
+
+  const bgLuminance = luminance(background.r, background.g, background.b);
+  const fgLuminance = luminance(foreground.r, foreground.g, foreground.b);
+
+  const ratio = bgLuminance > fgLuminance 
+    ? ((fgLuminance + 0.05) / (bgLuminance + 0.05))
+    : ((bgLuminance + 0.05) / (fgLuminance + 0.05));
+
+
+  function hightContrast(){
+    document.querySelector('#access-monitor').classList.add('text-green-600', 'dark:text-green-300')
+    document.querySelector('#access-monitor').classList.remove('text-yellow-600', 'dark:text-yellow-300')
+    document.querySelector('#good').classList.remove('hidden')
+    document.querySelector('#caution').classList.add('hidden')
+  }
+
+  function lowContrast(){
+    document.querySelector('#access-monitor').classList.add('text-yellow-600', 'dark:text-yellow-300')
+    document.querySelector('#access-monitor').classList.remove('text-green-600', 'dark:text-green-300')
+    document.querySelector('#good').classList.add('hidden')
+    document.querySelector('#caution').classList.remove('hidden')
+  }
+  if(ratio < 1/4.5){
+      hightContrast()
+    } else {
+      lowContrast()
+    } 
+  color.addEventListener('input', ()=>{
+    const background = hexToRgb(colorValue)
+    const foreground = hexToRgb("#ffffff")
+
+    const bgLuminance = luminance(background.r, background.g, background.b);
+    const fgLuminance = luminance(foreground.r, foreground.g, foreground.b);
+
+    const ratio = bgLuminance > fgLuminance 
+      ? ((fgLuminance + 0.05) / (bgLuminance + 0.05))
+      : ((bgLuminance + 0.05) / (fgLuminance + 0.05));
+    watchColorPicker()
+    if(ratio < 1/4.5){
+      hightContrast()
+    } else {
+      lowContrast()
+    } 
+  })
+    
+
+  generateBtn.addEventListener('click', ()=>{
+    let background = hexToRgb(colorValue);
+    parent.postMessage({ pluginMessage: {id, logoPath, background}}, '*')
+  })  
+</script>
