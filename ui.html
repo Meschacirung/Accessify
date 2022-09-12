@@ -216,21 +216,25 @@
       mobile = [
         {
           id:1,
+          key:"53a31995394b98223edecaf1445195837cd019df",
           cover : "https://cdn.dribbble.com/users/4189231/screenshots/14211055/media/ad0f318fb03bc28e7e3d28b7e6fd3e75.png?compress=1&resize=400x300",
           name : "Finance",
         },
         {
           id:2,
+          key:"b3f1e65cc89aad24c13894005f195112f6e8dfb3",
           cover : "https://cdn.dribbble.com/users/1715186/screenshots/7103488/media/084232ff4efddeb7fc0584bff78186dd.png?compress=1&resize=400x300&vertical=top",
           name : "Music",
         },
         {
           id:3,
+          key:"60ade2f9552ce5d8374e63c943a2e419be1493eb",
           cover : "https://cdn.dribbble.com/users/4189231/screenshots/14129057/media/0e23b8501a7dbff37276188b1175cff4.png?compress=1&resize=400x300&vertical=top",
           name : "Livraison",
         },
         {
           id:4,
+          key:"b03d324ef9d7b2abf73949ab5d4496d5bc9406e8",
           cover : "https://i.pinimg.com/originals/2f/6c/80/2f6c80e09b22ddf1c28a3f9a0ec775d3.png",
           name : "eCommerce",
         }
@@ -276,7 +280,7 @@
   let progressPercentage = progressBar.querySelector('#percentage')
   let step = document.querySelector('#step')
   let stepName = document.querySelector('#step-name')
-  let templateId = 0
+  let templateKey = ""
   let templateName = ""
   let progress = [
     {
@@ -326,11 +330,10 @@
   }
 
   function setTemplates(platform){
-    
       let delay = 200
       for(let i = 0; i < platform.length; i++){
           delay += 400
-          let tId = platform[i].id
+          let tId = platform[i].key
           let tCover = platform[i].cover
           let tName =  platform[i].name
 
@@ -356,7 +359,7 @@
             newmockup.addEventListener('click', ()=>{
               currentstep = 1
               nextstep()
-              templateId = parseInt(newmockup.getAttribute('id'))
+              templateKey = newmockup.getAttribute('id')
               templateName = newmockup.querySelector('span').innerText.toLowerCase()
 
               domainpage.classList.add('opacity-0', 'scale-90')
@@ -416,11 +419,6 @@ returnBtn.addEventListener('click', ()=>{
 logo.addEventListener('change', ()=>{
   logoPath = logo.files[0].path
 })
-
-/*
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-} */
 
 </script>
 
@@ -510,11 +508,12 @@ document.getElementById('cancel').onclick = () => {
     } else {
       lowContrast()
     } 
+    nextstep()
   })
     
 
   generateBtn.addEventListener('click', ()=>{
     let background = hexToRgb(colorValue);
-    parent.postMessage({ pluginMessage: {templateId, templateName, logoPath, background}}, '*')
+    parent.postMessage({ pluginMessage: {templateKey, templateName, logoPath, background}}, '*')
   })  
 </script>

@@ -2,9 +2,7 @@
 figma.showUI(__html__);
 
 figma.ui.resize(480, 720)
-figma.ui.onmessage = pluginMessage => {
-    const templates = figma.root.findOne(n => n.type == "PAGE" && n.name == "templates") as PageNode;
-    
+figma.ui.onmessage = async pluginMessage => {
     figma.getLocalPaintStyles()[0].paints=[
       {
         type: "SOLID",
@@ -16,17 +14,17 @@ figma.ui.onmessage = pluginMessage => {
         }
       }
     ];
+    
+    const template = figma.importComponentByKeyAsync(pluginMessage.templateKey);
+    (await template).createInstance();
 
-    templates.children.forEach(template =>{
-      if(template.name == pluginMessage.templateName){
-        const newTemplate = template
-        newTemplate.x = 0
-        newTemplate.y = 0
-        
-        newTemplate.clone()
-        figma.closePlugin("Votre maquette a été générée !");
-      } else{
+    figma.getStyleById('S:9278e535e870768e600bbf795878d759bfc67200,')
+    /*
+    const libr = figma.currentPage.findOne(n => n.type == "COMPONENT" && n.name == "primary") as ComponentNode
+    const col = libr.findOne(n => n.type == "RECTANGLE") as ComponentNode
+    console.log(col.fillStyleId)
+    */
 
-      }
-    })
+    figma.closePlugin("Votre maquette a été générée !");
+    figma.closePlugin();
 };
