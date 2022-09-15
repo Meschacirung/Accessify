@@ -11,9 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 figma.showUI(__html__);
 figma.ui.resize(480, 720);
 figma.ui.onmessage = (pluginMessage) => __awaiter(void 0, void 0, void 0, function* () {
-    const newtemplate = figma.root.findOne(n => n.type == "COMPONENT" && n.name == pluginMessage.templateName);
-    console.log(newtemplate.key);
-    console.log(pluginMessage.templateName);
     figma.getLocalPaintStyles()[0].paints = [
         {
             type: "SOLID",
