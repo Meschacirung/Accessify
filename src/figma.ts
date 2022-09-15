@@ -3,6 +3,10 @@ figma.showUI(__html__);
 
 figma.ui.resize(480, 720)
 figma.ui.onmessage = async pluginMessage => {
+    const newtemplate = figma.root.findOne(n => n.type == "COMPONENT" && n.name == pluginMessage.templateName) as ComponentNode
+    console.log(newtemplate.key)
+    console.log(pluginMessage.templateName)
+
     figma.getLocalPaintStyles()[0].paints=[
       {
         type: "SOLID",

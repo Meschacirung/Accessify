@@ -2,9 +2,9 @@
   "name": "Accessify",
   "id": "1144865934215371579",
   "api": "1.0.0",
-  "main": "code.js",
+  "main": "./src/figma.js",
   "editorType": [
     "figma"
   ],
-  "ui": "ui.html"
+  "ui": "./src/ui.html"
 }
